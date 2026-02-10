@@ -45,17 +45,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     console.log('Volcengine API Response:', JSON.stringify(result));
 
-    const responseData = result as any;
-
-    if (responseData.code !== 10000) {
-        // Volcengine success code is usually 10000
-        // But the SDK might throw or return structure differently.
-        // Let's pass the result back for inspection.
+    if (result.code !== 10000) {
+        console.error('Volcengine API Error Detail:', JSON.stringify(result));
     }
 
     res.status(200).json(result);
   } catch (error: any) {
     console.error('API Error:', error);
-    res.status(500).json({ error: error.message || 'Internal Server Error' });
+    // If the error comes from the SDK (e.g. axios error), it might have a response property
+    if (error.response) {
+       console.error('SDK Error Response:', JSON.stringify(error.response.data));
+       return res.status(error.response.status || 500).json(error.response.data);
+    }
+    res.status(500).json({ error: error.message || 'Internal Server Error', details: error.toString() });
   }
 }
