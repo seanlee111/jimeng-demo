@@ -22,7 +22,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const service = new Service({
       host: 'visual.volcengineapi.com',
-      serviceName: 'visual',
+      serviceName: 'cv',
       region: 'cn-north-1',
       accessKeyId,
       secretKey,
