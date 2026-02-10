@@ -31,11 +31,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.log('Calling Volcengine API with prompt:', prompt);
 
     const result = await service.fetchOpenAPI({
-      Action: 'CVProcess',
+      Action: 'HighAesSmartDrawing',
       Version: '2022-08-31',
       method: 'POST',
       data: {
-        req_key: 'high_aes_smart_drawing',
+        // req_key is not needed for HighAesSmartDrawing action
         prompt: prompt,
       },
       headers: {
