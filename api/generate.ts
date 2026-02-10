@@ -45,7 +45,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     console.log('Volcengine API Response:', JSON.stringify(result));
 
-    if (result.code !== 10000) {
+    const responseData = result as any;
+    if (responseData.code !== 10000) {
         console.error('Volcengine API Error Detail:', JSON.stringify(result));
     }
 
