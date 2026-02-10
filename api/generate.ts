@@ -33,19 +33,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const result = await service.fetchOpenAPI({
       Action: 'CVProcess',
       Version: '2022-08-31',
-      Method: 'POST',
-      Body: {
+      method: 'POST',
+      data: {
         req_key: 'high_aes_smart_drawing',
         prompt: prompt,
       },
-      Headers: {
+      headers: {
         'Content-Type': 'application/json',
       },
     });
 
     console.log('Volcengine API Response:', JSON.stringify(result));
 
-    if (result.code !== 10000) {
+    const responseData = result as any;
+
+    if (responseData.code !== 10000) {
         // Volcengine success code is usually 10000
         // But the SDK might throw or return structure differently.
         // Let's pass the result back for inspection.
